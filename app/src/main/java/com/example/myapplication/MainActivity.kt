@@ -33,11 +33,11 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                         .padding(innerPadding)
                     ) {
-                        Greeting(
-                            name_one = "Stefan"
+                        First(
+                            name_one = "Planten Monitor"
                         )
                         Second(
-                            name_two = "Micha"
+                            name_two = "0.1"
                         )
                     }
                 }
@@ -47,10 +47,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name_one: String, modifier: Modifier = Modifier) {
-    Surface(color = Color.Blue) {
+fun First(name_one: String, modifier: Modifier = Modifier) {
+    Surface(color = Color.LightGray) {
         Text(
-            text = "Hello $name_one!",
+            text = "App : $name_one",
             //modifier = modifier
             //modifier = Modifier.padding(8.dp) // Add padding.
             //modifier = Modifier.androidx.compose.ui.Modifier.size(30.dp) // Not working.
@@ -59,9 +59,9 @@ fun Greeting(name_one: String, modifier: Modifier = Modifier) {
 }
 @Composable
 fun Second(name_two: String, modifier: Modifier = Modifier) {
-    Surface(color = Color.Green) {
+    Surface(color = Color.LightGray) {
         Text(
-            text = "Hello $name_two!",
+            text = "Version : $name_two",
             //modifier = modifier
             //modifier = Modifier.padding(8.dp) // Add padding.
             //modifier = Modifier.androidx.compose.ui.Modifier.size(30.dp) // Not working.
@@ -74,6 +74,7 @@ fun Second(name_two: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     MyApplicationTheme {
-        Greeting("Planten monitor")
+        First("Planten monitor")
+        Second("V0.1")
     }
 }
