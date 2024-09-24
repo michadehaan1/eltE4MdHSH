@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -29,7 +31,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+
 
 
 class MainActivity : ComponentActivity() {
@@ -49,7 +57,8 @@ class MainActivity : ComponentActivity() {
                             app_name = "Planten Monitor",
                             app_version = "0.1"
                         )
-                        Slider()
+                        ConnectDialog()
+                        //Slider()
 
                     }
                 }
@@ -85,6 +94,47 @@ fun TopBar() {
                     Text("Planten Monitor")
                 }
             )
+}
+
+@Composable
+fun ConnectDialog() {
+    val openAlertDialog = remember { mutableStateOf(false) }
+
+    // Your logic to open the dialog (e.g., button click) would go here
+    // Button to open the AlertDialog
+    Button(onClick = { openAlertDialog.value = true }) {
+        Text("Connect")
+    }
+    if (openAlertDialog.value) {
+        AlertDialog(
+            onDismissRequest = {
+                openAlertDialog.value = false
+            },
+            confirmButton = {
+                Button(onClick = {
+                    openAlertDialog.value = false
+                    println("Confirmation registered")
+                    // Add more logic for confirmation here
+                }) {
+                    Text("Connect")
+                }
+            },
+            dismissButton = {
+                Button(onClick = { openAlertDialog.value = false }) {
+                    Text("Cancel")
+                }
+            },
+            title = {
+                Text("Connect to sensor")
+            },
+            text = {
+                Text("Press the connect button to show connections.")
+            },
+            icon = {
+                Icon(imageVector = Icons.Default.Info, contentDescription = null)
+            }
+        )
+    }
 }
 
 @Composable
