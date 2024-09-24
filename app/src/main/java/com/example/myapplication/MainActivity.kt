@@ -7,18 +7,29 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 
 class MainActivity : ComponentActivity() {
@@ -33,12 +44,13 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                         .padding(innerPadding)
                     ) {
-                        First(
-                            name_one = "Planten Monitor"
+                        TopBar()
+                        AppInfo(
+                            app_name = "Planten Monitor",
+                            app_version = "0.1"
                         )
-                        Second(
-                            name_two = "0.1"
-                        )
+                        Slider()
+
                     }
                 }
             }
@@ -46,35 +58,44 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// https://developer.android.com/develop/ui/compose/components/slider Geraadpleegd op 24-09-2024, door S. Helmantel.
+@Preview
 @Composable
-fun First(name_one: String, modifier: Modifier = Modifier) {
+fun Slider() {
+    var sliderPosition by remember { mutableFloatStateOf(0f) }
+    Column {
+        Slider(
+            value = sliderPosition,
+            onValueChange = { sliderPosition = it }
+        )
+        Text(text = sliderPosition.toString())
+    }
+}
+
+// https://developer.android.com/develop/ui/compose/components/app-bars Geraadpleegd op 24-09-2024, door S. Helmantel.
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopBar() {
+            TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
+                title = {
+                    Text("Planten Monitor")
+                }
+            )
+}
+
+@Composable
+fun AppInfo(app_name: String, app_version: String, modifier: Modifier = Modifier) {
     Surface(color = Color.LightGray) {
         Text(
-            text = "App : $name_one",
+            text = "App : $app_name" +
+            "\nVersion : $app_version",
             //modifier = modifier
             //modifier = Modifier.padding(8.dp) // Add padding.
             //modifier = Modifier.androidx.compose.ui.Modifier.size(30.dp) // Not working.
         )
-    }
-}
-@Composable
-fun Second(name_two: String, modifier: Modifier = Modifier) {
-    Surface(color = Color.LightGray) {
-        Text(
-            text = "Version : $name_two",
-            //modifier = modifier
-            //modifier = Modifier.padding(8.dp) // Add padding.
-            //modifier = Modifier.androidx.compose.ui.Modifier.size(30.dp) // Not working.
-        )
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MyApplicationTheme {
-        First("Planten monitor")
-        Second("V0.1")
     }
 }
